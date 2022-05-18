@@ -2,7 +2,7 @@
 
 def set_config(args):
 
-    args.output_path = '/path/to/outputs/'
+    args.output_path = '../outputs/'
 
     args.sparse_comm = True 
     args.client_sparsity = 0.3
@@ -31,15 +31,15 @@ def set_config(args):
 
 def set_data_config(args):
 
-    args.task_path = '/path/to/task/'
+    args.task_path = '../tasks'
     
     # CIFAR10(0), CIFAR100(1), MNIST(2), SVHN(3),
     # F-MNIST((4), TrafficSign(5), FaceScrub(6), N-MNIST(7)
     
     if args.task in ['non_iid_50'] :
-        args.datasets    = [0, 1, 2, 3, 4, 5, 6, 7]
+        args.datasets    = [0] #[0, 1, 2, 3, 4, 5, 6, 7]
         args.num_clients = 5
-        args.num_tasks   = 10 
+        args.num_tasks   = 1 #10 
         args.num_classes = 5
         args.frac_clients = 1.0
     

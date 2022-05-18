@@ -209,14 +209,20 @@ class DecomposedConv(tf.keras.layers.Conv2D):
     self.my_theta = self.sw * mask + aw + tf.keras.backend.sum(aw_kbs * atten, axis=-1)
     ###################################################################################
 
+    # change format
+    if self.data_format == "channels_last" or self.data_format == "NHWC":
+      self.data_format = "NHWC"
+    else:
+      self.data_format = "NCHW"
+
     # if self._recreate_conv_op(inputs):
     self._convolution_op = nn_ops.Convolution(
         inputs.get_shape(),
         filter_shape=self.my_theta.shape,
         dilation_rate=self.dilation_rate,
         strides=self.strides,
-        padding=self._padding_op,
-        data_format=self._conv_op_data_format)
+        padding=self.padding.upper(),
+        data_format=self.data_format)
 
     # Apply causal padding to inputs for Conv1D.
     if self.padding == 'causal' and self.__class__.__name__ == 'Conv1D':

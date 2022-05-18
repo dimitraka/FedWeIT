@@ -36,7 +36,7 @@ class Server(ServerModule):
                 for gid, cid in enumerate(clients):
                     client = self.clients[gid]
                     selected = True if cid in selected_ids else False
-                    with tf.device('/device:GPU:{}'.format(gid)):
+                    with tf.device('/device:CPU:{}'.format(gid)):
                         thrd = threading.Thread(target=self.invoke_client, args=(client, cid, curr_round, selected, self.get_weights(), self.get_adapts()))
                         self.threads.append(thrd)
                         thrd.start()

@@ -50,7 +50,7 @@ class Client(ClientModule):
         if selected:
             self.set_weights(global_weights)
 
-        with tf.device('/device:GPU:{}'.format(self.state['gpu_id'])):
+        with tf.device('/device:CPU:{}'.format(self.state['gpu_id'])):
             self.train.train_one_round(self.state['curr_round'], self.state['round_cnt'], self.state['curr_task'])
         
         self.logger.save_current_state(self.state['client_id'], {

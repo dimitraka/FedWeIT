@@ -38,13 +38,13 @@ class ServerModule:
 
     def limit_gpu_memory(self):
         self.gpu_ids = np.arange(len(self.args.gpu.split(','))).tolist()
-        self.gpus = tf.config.list_physical_devices('GPU')
+        self.gpus = tf.config.list_physical_devices('CPU')
         if len(self.gpus)>0:
             for i, gpu_id in enumerate(self.gpu_ids):
                 gpu = self.gpus[gpu_id]
-                tf.config.experimental.set_memory_growth(gpu, True)
-                tf.config.experimental.set_virtual_device_configuration(gpu, 
-                    [tf.config.experimental.VirtualDeviceConfiguration(memory_limit=1024*self.args.gpu_mem_multiplier)])
+                # tf.config.experimental.set_memory_growth(gpu, True)
+                # tf.config.experimental.set_virtual_device_configuration(gpu, 
+                    # [tf.config.experimental.VirtualDeviceConfiguration(memory_limit=1024*self.args.gpu_mem_multiplier)])
 
     def run(self):
         self.logger.print('server', 'started')
@@ -75,7 +75,7 @@ class ServerModule:
         if len(self.gpus)>0:
             for i, gpu_id in enumerate(self.gpu_ids):
                 gpu = self.gpus[gpu_id]
-                with tf.device('/device:GPU:{}'.format(gpu_id)):
+                with tf.device('/device:CPU:{}'.format(gpu_id)):
                     self.clients[gpu_id] =self.ClientObj(gpu_id, opt_copied, initial_weights)
         else:
             num_parallel = 5
