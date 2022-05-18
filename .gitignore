@@ -2,3 +2,12 @@
 .DS_Store
 
 sftp-config.json
+
+__pycache__/
+data/__pycache__/
+misc/__pycache__/
+models/fedweit/__pycache__/
+modules/__pycache__/
+outputs/
+tasks/
+third_party/mixture_loader/__pycache__/
